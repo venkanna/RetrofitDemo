@@ -1,12 +1,9 @@
 package com.venkanna.retrofitdemo;
 
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -28,10 +25,10 @@ public class MainActivity extends AppCompatActivity {
         new Thread(new Runnable() {
             @Override
             public void run() {
-               List<Repo> repoList =  new MyApi().getRepos("venkanna");
-               for(Repo r :repoList){
-                   Log.e("Mainactivity","Sync Method :" + r.toString());
-               }
+                List<Repo> repoList = new MyApi().getRepos("venkanna");
+                for (Repo r : repoList) {
+                    Log.e("Mainactivity", "Sync Method :" + r.toString());
+                }
 
 
             }
@@ -41,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void success(List<Repo> repos, Response response) {
                 for (Repo r : repos) {
-                    Log.e("Mainactivity","Async Call Method :" + r.toString());
+                    Log.e("Mainactivity", "Async Call Method :" + r.toString());
                 }
             }
 
@@ -50,6 +47,35 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+
+        // Retrofit + AsyncTask
+        new OurRestService().fetch(new MyApi().getRestService(), new OurRestService.GetResult<List<Repo>, MyApi.RestService>() {
+            @Override
+            public void onStart() {
+                super.onStart();
+            }
+
+            @Override
+            public List<Repo> go(MyApi.RestService mService) {
+                return mService.listRepos("venkanna");
+            }
+
+            @Override
+            public void onSuccess(List<Repo> repos) {
+
+            }
+
+            @Override
+            public void onError(ErrorResponse errorResponse) {
+
+            }
+
+            @Override
+            public boolean handleUnAutherizedError() {
+                //TODO: Call refresh token service
+                return true;
+            }
+        }, null);
 
 
     }
