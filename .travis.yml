@@ -1,10 +1,11 @@
 language: android
 jdk: oraclejdk7
+
 env:
 matrix:
 - ANDROID_TARGET=android-19 ANDROID_ABI=armeabi-v7a
 global:
-- MALLOC_ARENA_MAX=2
+- ADB_INSTALL_TIMEOUT=20
 android:
 components:
 - tools
