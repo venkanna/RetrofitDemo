@@ -4,7 +4,7 @@ sudo: false
 android:
   components:
       # The BuildTools version used by your project
-      - build-tools-23.0.1
+      - build-tools-23.0.2
       # Uncomment the lines below if you want to
       # use the latest revision of Android SDK Tools
       - platform-tools
@@ -15,7 +15,7 @@ android:
 
 before_script:
     - echo yes | android update sdk --filter platform-tools --no-ui --force > /dev/null
-    - echo yes | android update sdk --filter android-21 --no-ui --force > /dev/null
+    - echo yes | android update sdk --filter android-23 --no-ui --force > /dev/null
     - echo yes | android update sdk --filter extra-android-support --no-ui --force > /dev/null
     - echo yes | android update sdk --filter extra-android-m2repository --no-ui --force > /dev/null
 
