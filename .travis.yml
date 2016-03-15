@@ -3,7 +3,7 @@ language: android
 jdk: oraclejdk7
 env:
 matrix:
-- ANDROID_TARGET=android-19 ANDROID_ABI=armeabi-v7a
+- ANDROID_TARGET=android-23 ANDROID_ABI=armeabi-v7a
 global:
 - ADB_INSTALL_TIMEOUT=20
 android:
@@ -16,7 +16,12 @@ components:
 - extra-android-m2repository
 - extra-google-m2repository
 - sys-img-armeabi-v7a-android-21
- echo y | android update sdk --filter android-23 --no-ui
+
+ before_install:
+    - echo "y" | android update sdk --no-ui --filter platform-tools,tools
+    - echo "y" | android update sdk --no-ui --filter build-tools-20.0.0
+    - echo "y" | android update sdk --no-ui --filter android-23
+    - echo "y" | android update sdk --no-ui --filter addon-google_apis-google-23,extra-android-m2repository,extra-google-m2repository
 sudo: required
 script:
 - ./gradlew clean build
